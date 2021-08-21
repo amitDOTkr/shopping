@@ -1,0 +1,5 @@
+{
+    // "go.gopath": "/snap/bin/go",
+    "go.goroot": "/snap/go/current"
+    // "go.GOROOT":"/snap/go/7736"
+}
