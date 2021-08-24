@@ -1,4 +1,4 @@
-package category
+package categoryservice
 
 import (
 	"github.com/amitdotkr/go/shopping/src/global"
@@ -8,5 +8,5 @@ import (
 var CategoryCollection mongo.Collection
 
 func init() {
-	CategoryCollection = *global.DB.Collection("products")
+	CategoryCollection = *global.DB.Collection("categories")
 }

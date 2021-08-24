@@ -24,7 +24,7 @@ func GetProductByID(c *fiber.Ctx) error {
 			"error": entities.Error{Type: "Not Found", Detail: err.Error()},
 		})
 	}
-	if !data.IsActice {
+	if !data.IsActive {
 		return c.Status(fiber.StatusForbidden).JSON(fiber.Map{
 			"error": entities.Error{Type: "Unlisted Product",
 				Detail: "Product Is Not Listed Yet"},

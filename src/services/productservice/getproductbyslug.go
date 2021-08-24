@@ -9,8 +9,6 @@ import (
 
 func GetProductBySlug(c *fiber.Ctx) error {
 
-	// c.Set("Content-Type", "application/json")
-
 	slug := c.Params("slug")
 
 	filter := bson.M{"slug": slug}
@@ -23,7 +21,7 @@ func GetProductBySlug(c *fiber.Ctx) error {
 				Detail: err.Error()},
 		})
 	}
-	if !data.IsActice {
+	if !data.IsActive {
 		return c.Status(fiber.StatusForbidden).JSON(fiber.Map{
 			"error": entities.Error{Type: "Unlisted Product",
 				Detail: "Product Is Not Listed Yet"},

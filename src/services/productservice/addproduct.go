@@ -13,6 +13,9 @@ import (
 
 func AddProduct(c *fiber.Ctx) error {
 
+	global.TokenValid(c)
+	// log.Printf("%v", token)
+
 	var product entities.Product
 
 	if err := c.BodyParser(&product); err != nil {

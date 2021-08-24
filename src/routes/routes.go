@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"github.com/amitdotkr/go/shopping/src/services/categoryservice"
 	"github.com/amitdotkr/go/shopping/src/services/productservice"
 	"github.com/amitdotkr/go/shopping/src/services/sellerservice"
 	"github.com/gofiber/fiber/v2"
@@ -14,21 +15,19 @@ func Register(app *fiber.App) {
 		})
 	})
 
-	// api := app.Group("/api")
-	// v1 := api.Group("/v1")
-	// ProductApi := v1.Group("/products")
-
 	// Products Routes
 	products := app.Group("products")
 	products.Post("/", productservice.AddProduct)
 	products.Get("/:id", productservice.GetProductByID)
 	products.Get("/slug/:slug", productservice.GetProductBySlug)
 
+	// Categories Routes
+	categories := app.Group("categories")
+	categories.Post("/", categoryservice.AddCategory)
+	categories.Get("/:id", categoryservice.GetCategoryByID)
+	categories.Get("/slug/:slug", categoryservice.GetCategoryBySlug)
+
 	seller := app.Group("seller")
 	seller.Post("/signup", sellerservice.SellerSignup)
 	seller.Post("/signin", sellerservice.SellerSignin)
 }
-
-// app.Post("/products", productroutes.AddProduct)
-// app.Get("/products/:id", productroutes.GetProductByID)
-// app.Get("/products/slug/:slug", productroutes.GetProductBySlug)
