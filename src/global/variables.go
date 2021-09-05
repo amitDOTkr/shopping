@@ -10,7 +10,7 @@ import (
 
 var Debugger_Val bool
 var DB_URL string
-var JWT_Access_Secret string
+var JWT_Access_Secret []byte
 
 func settingVariable() {
 
@@ -28,7 +28,7 @@ func settingVariable() {
 
 	Debugger_Val = debugger
 	DB_URL = os.Getenv("MongoDB_URL")
-	JWT_Access_Secret = os.Getenv("ACCESS_SECRET")
+	JWT_Access_Secret = []byte(os.Getenv("ACCESS_SECRET"))
 
 	// Initializing Database
 	ConnectToMongo()

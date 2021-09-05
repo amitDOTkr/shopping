@@ -1,6 +1,7 @@
 package productservice
 
 import (
+	// "log"
 	"time"
 
 	"github.com/amitdotkr/go/shopping/src/entities"
@@ -13,8 +14,12 @@ import (
 
 func AddProduct(c *fiber.Ctx) error {
 
-	global.TokenValid(c)
-	// log.Printf("%v", token)
+	claims, err := global.TokenClaims(c)
+	if err != nil {
+		return c.Status(fiber.StatusForbidden).JSON(fiber.Map{
+			"error": entities.Error{Type: "Authentication Error", Detail: err.Error()},
+		})
+	}
 
 	var product entities.Product
 
@@ -36,6 +41,17 @@ func AddProduct(c *fiber.Ctx) error {
 		})
 	}
 
+	sellerId := claims["id"].(string)
+	sid, err := primitive.ObjectIDFromHex(sellerId)
+	if err != nil {
+		return c.Status(fiber.StatusConflict).JSON(fiber.Map{
+			"error": entities.Error{Type: "Seller Id Error", Detail: err.Error()},
+		})
+	}
+
+	// productCategories := product.Categories
+
+	product.SellerId = sid
 	product.CreatedAt = time.Now()
 	product.ModifiedAt = time.Now()
 
