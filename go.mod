@@ -1,4 +1,4 @@
-module github.com/amitdotkr/go/shopping
+module github.com/amitdotkr/go-shopping
 
 go 1.16
 

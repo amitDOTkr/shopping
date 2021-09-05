@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/amitdotkr/go/shopping/src/global"
-	"github.com/amitdotkr/go/shopping/src/routes"
+	"github.com/amitdotkr/go-shopping/src/global"
+	"github.com/amitdotkr/go-shopping/src/routes"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
 

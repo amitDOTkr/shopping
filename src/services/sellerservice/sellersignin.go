@@ -1,8 +1,8 @@
 package sellerservice
 
 import (
-	"github.com/amitdotkr/go/shopping/src/entities"
-	"github.com/amitdotkr/go/shopping/src/global"
+	"github.com/amitdotkr/go-shopping/src/entities"
+	"github.com/amitdotkr/go-shopping/src/global"
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"

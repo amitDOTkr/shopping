@@ -1,9 +1,9 @@
 package routes
 
 import (
-	"github.com/amitdotkr/go/shopping/src/services/categoryservice"
-	"github.com/amitdotkr/go/shopping/src/services/productservice"
-	"github.com/amitdotkr/go/shopping/src/services/sellerservice"
+	"github.com/amitdotkr/go-shopping/src/services/categoryservice"
+	"github.com/amitdotkr/go-shopping/src/services/productservice"
+	"github.com/amitdotkr/go-shopping/src/services/sellerservice"
 	"github.com/gofiber/fiber/v2"
 )
 

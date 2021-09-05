@@ -1,7 +1,7 @@
 package sellerservice
 
 import (
-	"github.com/amitdotkr/go/shopping/src/global"
+	"github.com/amitdotkr/go-shopping/src/global"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
