@@ -6,7 +6,7 @@ import (
 
 	"github.com/amitdotkr/go-shopping/src/entities"
 	"github.com/amitdotkr/go-shopping/src/global"
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"

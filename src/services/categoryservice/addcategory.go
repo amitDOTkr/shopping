@@ -1,6 +1,7 @@
 package categoryservice
 
 import (
+	"strings"
 	"time"
 
 	"github.com/amitdotkr/go-shopping/src/entities"
@@ -21,7 +22,21 @@ func AddCategory(c *fiber.Ctx) error {
 		})
 	}
 
-	isSlugExist, err := IsSlugAlreadyExist(category.Slug)
+	categoryName := strings.TrimSpace(category.Name)
+	isCategoryNameExist, err := IsCategoryNameAlreadyExist(categoryName)
+	if err != nil {
+		return c.Status(fiber.StatusFound).JSON(fiber.Map{
+			"error": entities.Error{Type: "Database/JSON Error", Detail: err.Error()},
+		})
+	}
+	if isCategoryNameExist {
+		return c.Status(fiber.StatusFound).JSON(fiber.Map{
+			"error": entities.Error{Type: "Category Name Is Already Exist"},
+		})
+	}
+
+	categorySlug := strings.TrimSpace(category.Slug)
+	isSlugExist, err := IsSlugAlreadyExist(categorySlug)
 	if err != nil {
 		return c.Status(fiber.StatusFound).JSON(fiber.Map{
 			"error": entities.Error{Type: "Database/JSON Error", Detail: err.Error()},
@@ -33,6 +48,8 @@ func AddCategory(c *fiber.Ctx) error {
 		})
 	}
 
+	category.Name = categoryName
+	category.Slug = categorySlug
 	category.CreatedAt = time.Now()
 	category.ModifiedAt = time.Now()
 
@@ -54,6 +71,17 @@ func AddCategory(c *fiber.Ctx) error {
 
 func IsSlugAlreadyExist(slug string) (bool, error) {
 	count, err := CategoryCollection.CountDocuments(global.Ctx, bson.M{"slug": slug}, options.Count())
+	if err != nil {
+		return true, err
+	}
+	if count > 0 {
+		return true, nil
+	}
+	return false, nil
+}
+
+func IsCategoryNameAlreadyExist(name string) (bool, error) {
+	count, err := CategoryCollection.CountDocuments(global.Ctx, bson.M{"name": name}, options.Count())
 	if err != nil {
 		return true, err
 	}

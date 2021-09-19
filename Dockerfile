@@ -1,15 +1,6 @@
-FROM golang:1.16-alpine
-
-WORKDIR /app
-
-COPY go.mod ./
-COPY go.sum ./
-RUN go mod download
-
-COPY * ./
-
-RUN go build -o /shopping
-
-EXPOSE 8080
-
-CMD [ "/shopping" ]
+FROM golang:1.17.1-alpine AS build
+WORKDIR /src
+COPY . .
+RUN go build -o /out/example .
+FROM scratch AS bin
+COPY --from=build /out/example /

@@ -26,26 +26,26 @@ func SellerSignin(c *fiber.Ctx) error {
 		})
 	}
 
-	isExist, err := IsEmailAlreadyExist(seller.Email)
-	if err != nil {
-		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
-			"error": entities.Error{
-				Type:   "Database Error",
-				Detail: err.Error()},
-		})
-	}
-	if !isExist {
-		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
-			"error": entities.Error{
-				Type:   "Authentication Error",
-				Detail: "The Credentials you provided cannot be authenticated."},
-		})
-	}
+	// isExist, err := IsEmailAlreadyExist(seller.Email)
+	// if err != nil {
+	// 	return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+	// 		"error": entities.Error{
+	// 			Type:   "Database Error",
+	// 			Detail: err.Error()},
+	// 	})
+	// }
+	// if !isExist {
+	// 	return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+	// 		"error": entities.Error{
+	// 			Type:   "Authentication Error",
+	// 			Detail: "The Credentials you provided cannot be authenticated."},
+	// 	})
+	// }
 
 	data := &entities.Seller{}
 	res := SellerCollection.FindOne(global.Ctx, bson.M{"email": seller.Email})
 	if err := res.Decode(data); err != nil {
-		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
 			"error": entities.Error{
 				Type:   "Database/Json Error",
 				Detail: err.Error()},
