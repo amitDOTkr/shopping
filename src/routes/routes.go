@@ -31,6 +31,8 @@ func Register(app *fiber.App) {
 
 	seller := app.Group("seller")
 	seller.Post("/signup", sellerservice.SellerSignup)
-	seller.Post("/signin", sellerservice.SellerSignin)
+	seller.Post("/signin", sellerservice.SellerSigninGo)
 	seller.Post("/myproducts", sellerservice.MyProducts)
+	seller.Post("/regeneratetoken", sellerservice.RegenerateToken)
+
 }

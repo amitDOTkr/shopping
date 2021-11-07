@@ -28,7 +28,3 @@ func ConnectToMongo() {
 
 	DB = *client.Database("shopping")
 }
-
-// func init() {
-// 	ConnectToMongo()
-// }

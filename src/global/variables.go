@@ -10,7 +10,8 @@ import (
 
 var Debugger_Val bool
 var DB_URL string
-var JWT_Access_Secret []byte
+var PRVKEY_LOC string
+var PUBKEY_LOC string
 
 func settingVariable() {
 
@@ -28,10 +29,12 @@ func settingVariable() {
 
 	Debugger_Val = debugger
 	DB_URL = os.Getenv("MongoDB_URL")
-	JWT_Access_Secret = []byte(os.Getenv("ACCESS_SECRET"))
+	PRVKEY_LOC = os.Getenv("PRVKEY_LOC")
+	PUBKEY_LOC = os.Getenv("PUBKEY_LOC")
 
 	// Initializing Database
 	ConnectToMongo()
+	Refresh()
 }
 
 func init() {

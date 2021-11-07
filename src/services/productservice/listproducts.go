@@ -37,8 +37,6 @@ func ListProducts(c *fiber.Ctx, filter primitive.M) error {
 			"error": entities.Error{Type: "Database Error", Detail: err.Error()},
 		})
 	}
-	c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"products": products,
-	})
+	c.Status(fiber.StatusOK).JSON(products)
 	return nil
 }
