@@ -66,10 +66,25 @@ func SellerSignup(c *fiber.Ctx) error {
 
 	oid, _ := sellerRes.InsertedID.(primitive.ObjectID)
 
-	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
-		"id":    oid,
-		"email": seller.Email,
+	if err := CreateTokenPairGo(c, oid.Hex(), "seller"); err != nil {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+			"error": entities.Error{
+				Type:   "Token Generation Error",
+				Detail: err.Error()},
+		})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"seller": entities.Seller{
+			ID:              oid,
+			Name:            seller.Name,
+			Email:           seller.Email,
+			IsEmailVerified: seller.IsEmailVerified,
+			ProfileImage:    seller.ProfileImage,
+			IsActice:        seller.IsActice,
+		},
 	})
+
 }
 
 func IsEmailAlreadyExist(email string) (bool, error) {

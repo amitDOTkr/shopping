@@ -10,7 +10,7 @@ require (
 	// github.com/gofiber/fiber v1.14.6
 	github.com/gofiber/fiber/v2 v2.21.0
 	github.com/golang-jwt/jwt v3.2.2+incompatible
-	github.com/joho/godotenv v1.4.0
+	// github.com/joho/godotenv v1.4.0
 	// github.com/mattn/go-isatty v0.0.13 // indirect
 	// github.com/pelletier/go-toml v1.9.3 // indirect
 	go.mongodb.org/mongo-driver v1.7.4

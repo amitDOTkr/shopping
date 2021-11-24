@@ -16,8 +16,8 @@ func ConnectToMongo() {
 
 	client, err := mongo.NewClient(options.Client().ApplyURI(DB_URL))
 	if err != nil {
-		log.Fatalln("mongodb error")
-		log.Fatal(err)
+		log.Println("mongodb error")
+		log.Printf("error: %v", err)
 	}
 	Ctx = context.Background()
 
