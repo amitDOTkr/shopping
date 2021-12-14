@@ -13,37 +13,12 @@ import (
 
 func AddProduct(c *fiber.Ctx) error {
 
-	// var sellerId string
-
 	userId, err := global.ValidatingUser(c)
 	if err != nil {
 		return c.Status(fiber.StatusForbidden).JSON(fiber.Map{
 			"error": entities.Error{Type: "Authentication Error", Detail: err.Error()},
 		})
 	}
-
-	// at := c.Cookies("access_token", "")
-	// if at != "" {
-	// 	claims, err := global.TokenClaims(at)
-	// 	if err != nil {
-	// 		return c.Status(fiber.StatusForbidden).JSON(fiber.Map{
-	// 			"error": entities.Error{Type: "Authentication Error", Detail: err.Error()},
-	// 		})
-	// 	}
-	// 	sellerId = claims["id"].(string)
-	// }
-
-	// if at == "" {
-	// 	global.RegenerateTokenUsingRefreshToken(c)
-	// 	rt := c.Cookies("refresh_token")
-	// 	claims, err := global.TokenClaims(rt)
-	// 	if err != nil {
-	// 		return c.Status(fiber.StatusForbidden).JSON(fiber.Map{
-	// 			"error": entities.Error{Type: "Authentication Error", Detail: err.Error()},
-	// 		})
-	// 	}
-	// 	sellerId = claims["user"].(string)
-	// }
 
 	var product entities.Product
 
@@ -71,8 +46,6 @@ func AddProduct(c *fiber.Ctx) error {
 			"error": entities.Error{Type: "Seller Id Error", Detail: err.Error()},
 		})
 	}
-
-	// productCategories := product.Categories
 
 	product.SellerId = sid
 	product.CreatedAt = time.Now()

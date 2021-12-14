@@ -26,6 +26,7 @@ func main() {
 	app.Use(compress.New(compress.Config{
 		Level: compress.LevelBestSpeed, // 1
 	}))
+	app.Static("/images", "./images")
 
 	routes.Register(app)
 

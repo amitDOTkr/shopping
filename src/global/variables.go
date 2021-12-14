@@ -25,17 +25,17 @@ func settingVariable() {
 	// Setting Enviroment Variables
 	debugger, err := strconv.ParseBool(os.Getenv("Debugger_Val"))
 	if err != nil {
-		log.Println("Enviroment Variable is not set. OR Unable to Parse Debuuger_Value.")
+		log.Println("Enviroment Variable is not set OR Unable to Parse Debuuger_Value.")
 	}
 
 	access_token_time, err := strconv.Atoi(os.Getenv("AccessTokenTime"))
 	if err != nil {
-		log.Println("Enviroment Variable is not set. OR Unable to Parse Access Token Time.")
+		log.Println("Enviroment Variable is not set OR Unable to Parse Access Token Time.")
 	}
 
 	refresh_token_time, err := strconv.Atoi(os.Getenv("RefreshTokenTime"))
 	if err != nil {
-		log.Println("Enviroment Variable is not set. OR Unable to Parse Refresh Token Time.")
+		log.Println("Enviroment Variable is not set OR Unable to Parse Refresh Token Time.")
 	}
 
 	Debugger_Val = debugger

@@ -97,6 +97,8 @@ func RegenerateRefreshToken(c *fiber.Ctx, userid, role, keyId string) error {
 	rc.Value = rt
 	rc.Expires = exp
 	rc.HTTPOnly = true
+	rc.Secure = true
+	rc.SameSite = "Strict"
 
 	c.Cookie(rc)
 
@@ -158,6 +160,8 @@ func CreateAccessTokenGo(c *fiber.Ctx, userid string, role string) error {
 	ac.Value = at
 	ac.Expires = exp
 	ac.HTTPOnly = true
+	ac.Secure = true
+	ac.SameSite = "Strict"
 
 	c.Cookie(ac)
 
@@ -199,6 +203,8 @@ func CreateRefreshTokenGo(c *fiber.Ctx, userid string, role string) error {
 	rc.Value = rt
 	rc.Expires = exp
 	rc.HTTPOnly = true
+	rc.Secure = true
+	rc.SameSite = "Strict"
 
 	c.Cookie(rc)
 
@@ -235,8 +241,6 @@ func RegenerateTokenUsingRefreshToken(c *fiber.Ctx) error {
 			"error": entities.Error{Type: "Object Id Error", Detail: err.Error()},
 		})
 	}
-
-	// token := global.ExtractToken(c)
 
 	data := &entities.Refreshtoken{}
 	filter := bson.M{"_id": kid}
@@ -291,7 +295,6 @@ func ValidatingUser(c *fiber.Ctx) (string, error) {
 		if rt == "" {
 			return "", errors.New("Refresh Token is Unavailable/Expired")
 		}
-		log.Printf("rt: %v", rt)
 		RegenerateTokenUsingRefreshToken(c)
 
 		claims, err := TokenClaims(rt)
@@ -302,73 +305,3 @@ func ValidatingUser(c *fiber.Ctx) (string, error) {
 	}
 	return userId, nil
 }
-
-// func CreateAccessToken(c *fiber.Ctx, userid string, role string) (string, error) {
-
-// 	prvKey, err := ioutil.ReadFile(PRVKEY_LOC)
-// 	if err != nil {
-// 		log.Printf("err: %v", err.Error())
-// 	}
-
-// 	key, err := jwt.ParseRSAPrivateKeyFromPEM(prvKey)
-// 	if err != nil {
-// 		log.Printf("error: %v", err.Error())
-// 	}
-
-// 	exp := time.Now().Add(time.Minute * 15)
-
-// 	atClaims := jwt.MapClaims{}
-// 	atClaims["uid"] = userid
-// 	atClaims["role"] = role
-// 	atClaims["type"] = "access"
-// 	atClaims["exp"] = exp.Unix()
-
-// 	at, err := jwt.NewWithClaims(jwt.SigningMethodRS256, atClaims).SignedString(key)
-// 	if err != nil {
-// 		return "", err
-// 	}
-
-// 	ac := new(fiber.Cookie)
-// 	ac.Name = "access_token"
-// 	ac.Value = at
-// 	ac.Expires = exp
-// 	c.Cookie(ac)
-
-// 	return at, nil
-// }
-
-// func CreateRefreshToken(userid string, role string) (string, error) {
-
-// 	kid := primitive.NewObjectID()
-// 	keyId := kid.Hex()
-
-// 	prvKey, err := ioutil.ReadFile(PRVKEY_LOC)
-// 	if err != nil {
-// 		log.Printf("err: %v", err.Error())
-// 	}
-
-// 	key, err := jwt.ParseRSAPrivateKeyFromPEM(prvKey)
-// 	if err != nil {
-// 		log.Printf("error: %v", err.Error())
-// 	}
-
-// 	tokenExpire := time.Now().Add(time.Hour * 600).Unix()
-
-// 	rtClaims := jwt.MapClaims{}
-// 	rtClaims["kid"] = keyId
-// 	rtClaims["uid"] = userid
-// 	rtClaims["role"] = role
-// 	rtClaims["type"] = "refresh"
-// 	rtClaims["exp"] = tokenExpire
-
-// 	rt, err := jwt.NewWithClaims(jwt.SigningMethodRS256, rtClaims).SignedString(key)
-// 	if err != nil {
-// 		return "", err
-// 	}
-
-// 	if err := RefreshTokenInDatabase(userid, tokenExpire, kid, rt); err != nil {
-// 		return "", nil
-// 	}
-
-// 	return rt, nil
-// }
